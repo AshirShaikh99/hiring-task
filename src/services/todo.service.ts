@@ -40,6 +40,8 @@ export class TodoService {
   }
 
   static async delete(id: string, userId: string) {
+    console.log(`Todo ID for deleting: ${id}`);
+    console.log(`User ID for deleting: ${userId}`);
     return await this.todoRepository.delete({ id, user: { id: userId } });
   }
 }

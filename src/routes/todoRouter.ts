@@ -18,7 +18,13 @@ todoRouter.post("/", createValidator(), TodoController.createTodo);
 todoRouter.get("/", TodoController.getTodos);
 
 // PUT /api/v1/todos/:id - Update an existing todo
-todoRouter.put("/:id", updateValidator(), TodoController.updateTodo);
+todoRouter.put("/:id", authMiddleware, (req, res, next) => {
+  console.log("PUT request received:", req.params, req.body); // Debug log
+  TodoController.updateTodo(req, res);
+});
 
 // DELETE /api/v1/todos/:id - Delete a todo
-todoRouter.delete("/:id", TodoController.deleteTodo);
+todoRouter.delete("/:id", authMiddleware, (req, res, next) => {
+  console.log("DELETE request received:", req.params, req.body); // Debug log
+  TodoController.deleteTodo(req, res);
+});
