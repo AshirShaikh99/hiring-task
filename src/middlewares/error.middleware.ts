@@ -1,26 +1,17 @@
-import { ArgumentValidationError, CustomError } from "../errors";
-import { Logger } from "../utils";
-import { NextFunction, Request, Response } from "express";
+// src/middlewares/error.middleware.ts
+import { Request, Response, NextFunction } from "express";
+import { CustomError } from "../types/error";
 
 export const errorHandlerMiddleware = (
-  error: unknown,
+  error: CustomError,
   _req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  Logger.error(JSON.stringify(error));
+  const status = error.status || 500;
+  const message = error.message || "Something went wrong";
 
-  if (error instanceof CustomError) {
-    if(error instanceof ArgumentValidationError) {
-      res.status(error.errorCode).json({
-        message: error.message,
-        messages: error.messages
-      })
-    }
-    else res.status(error.errorCode).json({
-      message: error.message,
-    });
-  }
-
-  return;
+  return res.status(status).json({
+    error: message,
+  });
 };

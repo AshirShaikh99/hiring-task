@@ -1,9 +1,7 @@
-import { Env } from "../env";
+// src/middlewares/route.middleware.ts
 import { Request, Response, NextFunction } from "express";
-
 import { Logger } from "../utils";
-import { validateIp } from "../utils/validateIp";
-import { clientInspector } from "valid-ip-scope";
+import { Env } from "../env";
 
 export const routeMiddleware = async (
   req: Request,
@@ -11,7 +9,6 @@ export const routeMiddleware = async (
   next: NextFunction
 ) => {
   if (req.path !== "/health") {
-    const data = validateIp(req.ip) ? await clientInspector(req) : "Invalid IP";
     Logger.group({
       title: "New Request",
       descriptions: [
@@ -33,7 +30,15 @@ export const routeMiddleware = async (
         },
         {
           description: "CLIENTINFO",
-          info: JSON.stringify(data, null, 2),
+          info: JSON.stringify(
+            {
+              ip: req.ip,
+              userAgent: req.headers["user-agent"],
+              timestamp: new Date().toISOString(),
+            },
+            null,
+            2
+          ),
         },
       ],
     });

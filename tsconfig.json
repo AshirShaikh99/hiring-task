@@ -24,11 +24,13 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
+    "noFallthroughCasesInSwitch": false
   },
   "ts-node": {
     "require": []
   },
+  "typeRoots": ["./src/types", "./node_modules/@types"],
+  "types": ["express"],
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
