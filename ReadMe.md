@@ -1,58 +1,83 @@
-# Home Assignment: Todo List Application
+# Installation
 
-## Objective  
-Develop a full stack Todo List application using the provided backend code for authentication. The application should allow users to create, read, update, and delete todo items.
+# Clone the repository
 
-## Technologies
-- **Backend:** Express.js (authentication code provided)
-- **Frontend:** React.js (architecture is flexible)
+git clone [repository-url]
 
-## Requirements
+# Install dependencies
 
-### 1. Authentication:
-   - Implement user authentication using the provided backend code.
-   - Ensure secure login and registration processes.
-   - Use JWT or session-based authentication as per the provided backend architecture.
+cd backend
+npm install
 
-### 2. Todo List Features:
-   - **CRUD Operations:** 
-     - Users should be able to create, read, update, and delete their todo items.
-   - **Todo Item Structure:**
-     - Each todo item should have at least the following properties:
-       - Title (string)
-       - Description (string)
-       - Status (boolean: completed or not)
-       - Due Date (date)
-   - **User-specific Todos:**
-     - Ensure that each user can only manage their own todo items.
+# Configure environment variables
 
-### 3. Frontend Requirements:
-   - Use React.js for the frontend.
-   - Implement a clean and user-friendly interface.
-   - Ensure responsiveness for different screen sizes.
-   - Use state management (e.g., Context API, Redux) to manage application state.
-   - Include validation for user inputs.
+.env
 
-### 4. Additional Features (Optional):
-   - Implement sorting and filtering options for the todo list.
-   - Add user notifications for actions (e.g., todo added, updated, deleted).
-   - Provide a dark mode toggle.
+# Edit .env with your database credentials and JWT secret
 
-### 5. Testing:
-   - Write unit tests for critical components and functions.
-   - Ensure the application is free of critical bugs.
+DB_HOST=localhost
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_NAME=todo_db
+JWT_SECRET=your_secret_key
 
-### 6. Documentation:
-   - Provide clear documentation on how to set up and run the application.
-   - Include comments in the code to explain key functionalities.
+# Start the Server
 
-### 7. Submission Guidelines:
-   - Submit the code repository (e.g., GitHub) with a clear commit history.
-   - Include a README file with instructions on how to run the application.
-   - Provide a demo link if hosted online.
+npm run dev
 
-## Evaluation Criteria
-- Code quality and organization.
-- Functionality and adherence to requirements.
-- User interface design and user experience.
-- Testing coverage and documentation.
+# Register User
+
+POST http://localhost:8000/api/v1/auth/register
+Content-Type: application/json
+
+{
+"email": "user@example.com",
+"password": "password123",
+"name": "John Doe"
+}
+
+# Login User
+
+POST http://localhost:8000/api/v1/auth/login
+Content-Type: application/json
+
+{
+"email": "user@example.com",
+"password": "password123"
+}
+
+# Todo Endpoints
+
+### Note: Include the JWT token in all todo requests:
+
+Authorization: Bearer your_jwt_token
+
+# Create Todo
+
+POST http://localhost:8000/api/v1/todos
+Content-Type: application/json
+
+{
+"title": "Complete Project",
+"description": "Finish the todo app",
+"dueDate": "2024-12-31"
+}
+
+# Get All Todos
+
+GET http://localhost:8000/api/v1/todos
+
+# Update Todo
+
+PUT http://localhost:8000/api/v1/todos/{todoId}
+Content-Type: application/json
+
+{
+"title": "Updated Title",
+"description": "Updated description",
+"completed": true,
+}
+
+# Delete Todo
+
+DELETE http://localhost:8000/api/v1/todos/{todoId}
